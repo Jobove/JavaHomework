@@ -14,8 +14,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 
 public class Lesson2_2 extends Application {
@@ -36,16 +34,12 @@ public class Lesson2_2 extends Application {
             String name = nameInput.getText(),
                     returnString;
             StringBuilder returnStringBuilder = new StringBuilder();
-            try {
-                for (int i = 0; i < name.length(); ++i) {
-                    String subString = name.substring(i, i + 1);
-                    returnStringBuilder.append(subString).
-                            append("的UTF-8编码是").
-                            append(URLEncoder.encode(subString, "UTF-8").replace("%", ""))
-                            .append("\n");
-                }
-            } catch (UnsupportedEncodingException unsupportedEncodingException) {
-                unsupportedEncodingException.printStackTrace();
+            for (int i = 0; i < name.length(); ++i) {
+                char ch = name.charAt(i);
+                returnStringBuilder.append(ch).
+                        append("的Unicode编码是").
+                        append((int) ch)
+                        .append("\n");
             }
             returnString = returnStringBuilder.toString();
             JOptionPane.showMessageDialog(null, returnString);
