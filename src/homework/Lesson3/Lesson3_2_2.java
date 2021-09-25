@@ -51,7 +51,6 @@ public class Lesson3_2_2 extends Application {
 
         Button enterButton = new Button("确认!");
         enterButton.setOnAction(e -> {
-            //TODO
             String firstTime = firstTimeInput.getText(),
                     secondTime = secondTimeInput.getText();
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm:ss");
