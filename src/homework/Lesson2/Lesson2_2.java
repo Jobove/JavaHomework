@@ -36,9 +36,9 @@ public class Lesson2_2 extends Application {
             StringBuilder returnStringBuilder = new StringBuilder();
             for (int i = 0; i < name.length(); ++i) {
                 char ch = name.charAt(i);
-                returnStringBuilder.append(ch).
-                        append("的Unicode编码是").
-                        append((int) ch)
+                returnStringBuilder.append(ch)
+                        .append("的Unicode编码是")
+                        .append((int) ch)
                         .append("\n");
             }
             returnString = returnStringBuilder.toString();
