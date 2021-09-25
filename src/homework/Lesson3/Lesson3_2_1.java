@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Lesson3_2 {
+public class Lesson3_2_1 {
     public static void main(String[] args) throws Exception {
         System.out.println("Please input two date in the form of \"HH:MM:SS AM/PM\" in two lines:");
         Scanner scanner = new Scanner(System.in);
