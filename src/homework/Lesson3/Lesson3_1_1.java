@@ -6,40 +6,22 @@ import java.util.regex.Pattern;
 
 public class Lesson3_1_1 {
     public static void main(String[] args) {
-        System.out.print("Enter an integer ends with 'c' or 'C' to transform Celsius degree, " +
-                "or an integer ends with 'f' or 'F' to transform vice versa: ");
+        System.out.println("Please enter your sex(\"M\" for man and \"W\" for woman), weight, height and your age: ");
         Scanner scanner = new Scanner(System.in);
-        String inputString = scanner.next();
-
-        Pattern CelsiusPattern = Pattern.compile("(\\d+(|\\.\\d+))[cC]");
-        Matcher CelsiusMatcher = CelsiusPattern.matcher(inputString);
-
-        if(CelsiusMatcher.find()) {
-            double Celsius = Double.parseDouble(CelsiusMatcher.group(1));
-            double result = CelsiusToFahrenheit(Celsius);
-            System.out.printf("%.1f degrees Celsius is %.1f degrees Fahrenheit.", Celsius, result);
-        }
-        else {
-            Pattern FahrenheitPattern = Pattern.compile("(\\d+(|\\.\\d+))[fF]");
-            Matcher FahrenheitMatcher = FahrenheitPattern.matcher(inputString);
-            if(FahrenheitMatcher.find()) {
-                double Fahrenheit = Double.parseDouble(FahrenheitMatcher.group(1));
-                double result = FahrenheitToCelsius(Fahrenheit);
-                System.out.printf("%.1f degrees Fahrenheit is %.1f degrees Celsius.", Fahrenheit, result);
-
-            }
-            else {
-                System.out.println("Wrong input, please correct!");
-                System.exit(1);
-            }
+        String input = scanner.nextLine();
+        Pattern pattern = Pattern.compile("([MW]) (\\d+|(\\d+\\.\\d+)) (\\d+|(\\d+\\.\\d+)) (\\d+)");
+        Matcher matcher = pattern.matcher(input);
+        if (matcher.find()) {
+            boolean isWoman = matcher.group(1).contentEquals("W");
+            double weight = Double.parseDouble(matcher.group(2)),
+                    height = Double.parseDouble(matcher.group(4));
+            int age = Integer.parseInt(matcher.group(6));
+            System.out.printf("To maintain your weight, you need to eat %.0f chocolate bar(s) per day.\n",
+                    Math.ceil(calculateBMR(isWoman, weight, height, age)));
         }
     }
 
-    static double CelsiusToFahrenheit(double Celsius) {
-        return Celsius / 5.0 * 9 + 32;
-    }
-
-    static double FahrenheitToCelsius(double Fahrenheit) {
-        return (Fahrenheit - 32) * 5.0 / 9;
+    static double calculateBMR(boolean isWoman, double weight, double height, int age) {
+        return isWoman ? 655 + 4.3 * weight + 4.7 * height - 4.7 * age : 66 + 6.3 * weight + 12.9 * height - 6.8 * age;
     }
 }
