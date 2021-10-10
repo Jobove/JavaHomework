@@ -2,7 +2,16 @@ package homework.Lesson4;
 
 import java.util.Vector;
 
+/**
+ * @author 张泽贤
+ */
 public class Lesson4_3 {
+    /**
+     * 检查各数位是否不同.
+     *
+     * @param num 需要检查的数字.
+     * @return 一个布尔值, true则符合要求, false则反之.
+     */
     static boolean checkUnique(int num) {
         Vector<Integer> array = new Vector<Integer>();
         while(num != 0) {
@@ -17,6 +26,12 @@ public class Lesson4_3 {
         return true;
     }
 
+    /**
+     * 对数字的各位进行求和.
+     *
+     * @param num 待操作的数字.
+     * @return 各数位的和.
+     */
     static int sumOfAllDigit(int num) {
         int sum = 0;
         while(num != 0) {

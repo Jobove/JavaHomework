@@ -2,7 +2,15 @@ package homework.Lesson4;
 
 import java.util.Scanner;
 
+/**
+ * @author 张泽贤
+ */
 public class Lesson4_2 {
+    /**
+     * 计算总分等.
+     *
+     * @param args 默认参数.
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int sumOfScore = 0, sumOfStudents = 0, sumA = 0, sumB = 0, sumC = 0, sumD = 0, sumF = 0, maxScore = 0, minScore = 100;
