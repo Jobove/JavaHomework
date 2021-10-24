@@ -124,5 +124,6 @@ public class Lesson5_1 {
         System.out.printf("测试样例1的名字是: %s, 姓氏是: %s, 邮箱是: %s, 电话号码是: %d.\n",
                 test1.getFirstName(), test1.getSecondName(), test1.getEmail(), test1.getPhoneNumber());
         System.out.printf("测试样例1是否与测试样例2相等? %s.", (test1.equals(test2)) ? "True" : "False");
+
     }
 }
