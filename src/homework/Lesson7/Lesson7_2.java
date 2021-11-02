@@ -48,7 +48,6 @@ class ArraySorter {
             }
         }
         arrayList.toArray(anArray);
-
     }
 }
 
