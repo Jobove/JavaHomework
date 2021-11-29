@@ -71,6 +71,7 @@ public class Lesson8_3_2 extends Application{
                 shuffleAlert.setHeaderText("加密后信息");
                 shuffleAlert.setContentText(shuffleCipher.encode(messageInput.getText()));
                 shuffleAlert.show();
+                shuffleAlert.show();
             } catch (NumberFormatException numberFormatException) {
                 //如果n输入框内数字格式错误则处理异常
                 Alert exceptionAlert = new Alert(Alert.AlertType.ERROR);
