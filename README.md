@@ -1,2 +1,2 @@
 # JavaHomework
-A repository to store my Java homework
+A repository to store my Java Homework
