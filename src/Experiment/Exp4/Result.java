@@ -36,6 +36,18 @@ class Result {
     }
 
     /**
+     * 获取指定操作的计数的和
+     * @param operationType 操作类型
+     * @return 总数
+     */
+    public int getCount(int operationType) {
+        if (operationType > 3)
+            throw new IndexOutOfBoundsException();
+
+        return countMain[operationType] + countWingMan[operationType];
+    }
+
+    /**
      * 获取排序所花费时间
      * @return 排序所花费时间
      */

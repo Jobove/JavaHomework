@@ -20,8 +20,6 @@ public class MyData<N extends Number & Comparable<N>> {
 
     public static final int MAIN = 0, WINGMAN = 1;
 
-    public static final int GET = 0, SET = 1, SWAP = 2, COMPARE = 3;
-
     /**
      * 构造器
      * @param size 默认大小
@@ -262,22 +260,6 @@ public class MyData<N extends Number & Comparable<N>> {
             return Arrays.copyOf(countMain, 4);
         }
         return Arrays.copyOf(countWingMan, 4);
-    }
-
-    /**
-     * 获取指定类型的指定操作类型的计数
-     * @param arrayType 数组类型
-     * @param operationType 操作类型
-     * @return 返回计数
-     */
-    public int getCount(int arrayType, int operationType) {
-        if (arrayType > 1 || operationType > 3)
-            throw new IndexOutOfBoundsException();
-
-        if (arrayType == MAIN) {
-            return countMain[operationType];
-        }
-        return countWingMan[operationType];
     }
 
     /**
