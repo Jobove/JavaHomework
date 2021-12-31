@@ -15,6 +15,7 @@ public class MySort {
      * 冒泡排序
      * @param array 待排序的数组
      * @param <T> MyData或其派生类
+     * @return 一个Result类的实例, 记录了结果
      */
     @Contract("_ -> new")
     public static <T extends MyData<?>> @NotNull Result BubbleSort(@NotNull T array) {
@@ -36,9 +37,10 @@ public class MySort {
      * 选择排序
      * @param array 待排序的数组
      * @param <T> MyData或其派生类
+     * @return 一个Result类的实例, 记录了结果
      */
     @Contract("_ -> new")
-    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result SelectionSort(@NotNull T array) {
+    public static <T extends MyData<?>> @NotNull Result SelectionSort(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         int size = array.getSize();
 
@@ -46,7 +48,8 @@ public class MySort {
         for (int i = 0; i < size; ++i) {
             int smallest = i;
             for (int j = i + 1; j < size; ++j) {
-                if (array.getWingMan(smallest).compareTo(array.get(j)) > 0)
+//                if (array.getWingMan(smallest).compareTo(array.get(j)) > 0)
+                if (array.compareWingMan(smallest, j) > 0)
                     smallest = j;
             }
             array.swapWingMan(i, smallest);
@@ -59,16 +62,18 @@ public class MySort {
      * 插入排序
      * @param array 待排序的数组
      * @param <T> MyData或其派生类
+     * @return 一个Result类的实例, 记录了结果
      */
     @Contract("_ -> new")
-    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result InsertionSort(@NotNull T array) {
+    public static <T extends MyData<?>> @NotNull Result InsertionSort(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         int size = array.getSize();
 
         array.setWingMan(0, array.get(0));
         for (int i = 1; i < size; ++i) {
             //如果当前数字小于有序数组内的所有数, 则将有序数组全部后移一个并将这个数插入至有序数组的开头
-            if (array.getWingMan(0).compareTo(array.get(i)) >= 0) {
+            //if (array.getWingMan(0).compareTo(array.get(i)) >= 0) {
+            if (array.compareWingManToMain(0, i) >= 0) {
                 for (int k = i - 1; k >= 0; --k) {
                     array.swapWingMan(k, k + 1);
                 }
@@ -78,7 +83,7 @@ public class MySort {
 
             for (int j = 0; j < i; ++j) {
                 //否则一直寻找, 直到第j个数小于待插入数字
-                if (array.getWingMan(j).compareTo(array.get(i)) < 0) {
+                if (array.compareWingManToMain(j, i) < 0) {
                     //且j已经是有序数组的最后一个, 则直接将其插入至有序数组末尾
                     if (j == i - 1) {
                         array.setWingMan(i, array.get(i));
@@ -86,7 +91,7 @@ public class MySort {
                     }
                     //或者第j个数小于待插入数字且第j+1个数大于等于待插入数字
                     //则将第j+1个数及之后的所有的数字往后移一位, 再将待插入数字插入至下标j+1
-                    if (array.getWingMan(j + 1).compareTo(array.get(i)) >= 0) {
+                    if (array.compareWingManToMain(j + 1, i) >= 0) {
                         for (int k = i - 1; k > j; --k) {
                             array.swapWingMan(k, k + 1);
                         }
@@ -105,8 +110,9 @@ public class MySort {
      * 从外部调用的归并排序方法, 并不实现任何功能, 用以分离递归部分
      * @param array 待排序数组
      * @param <T> MyData或其派生类
+     * @return 一个Result类的实例, 记录了结果
      */
-    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result MergeSortRecursive(@NotNull T array) {
+    public static <T extends MyData<?>> @NotNull Result MergeSortRecursive(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         MergeSortWorker(array, 0, array.getSize() - 1);
         return new Result(array, startTime);
@@ -119,7 +125,7 @@ public class MySort {
      * @param end 需要排序的区间末尾位置
      * @param <T> MyData或其派生类
      */
-    private static <N extends Number & Comparable<N>, T extends MyData<N>> void MergeSortWorker(T array, int start, int end) {
+    private static <T extends MyData<?>> void MergeSortWorker(T array, int start, int end) {
         //递归边界条件, 如果数组长度为1则无需排序
         if (start == end)
             return;
@@ -147,7 +153,7 @@ public class MySort {
             }
 
             //否则比较左区间和右区间的第一个待排序的数, 将更小的那个插入到有序数组内
-            if (array.get(ls).compareTo(array.get(rs)) <= 0) {
+            if (array.compare(ls, rs) <= 0) {
                 array.setWingMan(start + i, array.get(ls++));
             } else {
                 array.setWingMan(start + i, array.get(rs++));
@@ -162,9 +168,10 @@ public class MySort {
      * 非递归的归并排序
      * @param array 待排序数组
      * @param <T> MyData或其派生类
+     * @return 一个Result类的实例, 记录了结果
      */
     @Contract("_ -> new")
-    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result MergeSortNonRecursive(@NotNull T array) {
+    public static <T extends MyData<?>> @NotNull Result MergeSortNonRecursive(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         int len = 2, size = array.getSize();
         //从大小为2的区间开始排序, 直到排序的区间的大小与数组大小相等或更大时进行最后一次排序, 而后终止循环
@@ -192,7 +199,7 @@ public class MySort {
                         continue;
                     }
 
-                    if (array.get(ls).compareTo(array.get(rs)) <= 0) {
+                    if (array.compare(ls, rs) <= 0) {
                         array.setWingMan(start + j, array.get(ls++));
                     } else {
                         array.setWingMan(start + j, array.get(rs++));
@@ -217,7 +224,14 @@ public class MySort {
         return new Result(array, startTime);
     }
 
-    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result sort(@NotNull T array, int operationType) {
+    /**
+     * 通过给定的排序类型调用对应函数进行排序
+     * @param array 待排序数组
+     * @param operationType 排序类型, 输入值应在闭区间[0, 4]之中
+     * @param <T> MyData或其派生类
+     * @return 一个Result类的实例, 记录了结果
+     */
+    public static <T extends MyData<?>> @NotNull Result sort(@NotNull T array, int operationType) {
         switch (operationType) {
             case BUBBLE:
                 return BubbleSort(array);

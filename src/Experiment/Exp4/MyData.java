@@ -1,5 +1,8 @@
 package Experiment.Exp4;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.security.InvalidParameterException;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -8,13 +11,13 @@ import java.util.Random;
  * @param <N> 任意实现了Comparable接口的Number的子类
  */
 public class MyData<N extends Number & Comparable<N>> {
-    private final Number[] elementData;
+    private Number[] elementData;
 
-    private final Number[] wingMan;
+    private Number[] wingMan;
 
-    private final int[] countMain;
+    private final long[] countMain;
 
-    private final int[] countWingMan;
+    private final long[] countWingMan;
 
     private final int size;
 
@@ -28,8 +31,8 @@ public class MyData<N extends Number & Comparable<N>> {
         this.size = size;
         elementData = new Number[size];
         wingMan = new Number[size];
-        countMain = new int[4];
-        countWingMan = new int[4];
+        countMain = new long[4];
+        countWingMan = new long[4];
         for (int i = 0; i < 4; ++i)
             countMain[i] = 0;
     }
@@ -47,13 +50,28 @@ public class MyData<N extends Number & Comparable<N>> {
     }
 
     /**
-     * 随机填充数组
+     * 随机填充数组, 不指定范围
      */
-    public void fill() {
-        Random random = new Random(System.currentTimeMillis());
+    public long fill() {
+        long seed = System.currentTimeMillis();
+        Random random = new Random(seed);
         for (int i = 0; i < size; ++i) {
             elementData[i] = random.nextInt();
         }
+        return seed;
+    }
+
+    /**
+     * 随机填充数组, 指定随机值的范围
+     * @param minValue 随机生成的值的最小范围
+     * @param maxValue 随机生成的值的最大范围
+     * @return 随机生成器所使用的种子, 便于复现原数组
+     */
+    public long fill(int minValue, int maxValue) {
+        long seed = System.currentTimeMillis();
+        Random random = new Random(seed);
+        elementData = random.ints(size, minValue, maxValue).boxed().toArray(Integer[]::new);
+        return seed;
     }
 
     /**
@@ -184,6 +202,20 @@ public class MyData<N extends Number & Comparable<N>> {
     }
 
     /**
+     * 比较辅助数组中的元素和主数组中的元素
+     * @param posInWingMan 元素位于辅助数组中的位置
+     * @param posInMain 元素位于主数组中的位置
+     * @return 比较结果
+     */
+    public int compareWingManToMain(int posInWingMan, int posInMain) {
+        rangeCheck(posInWingMan);
+        rangeCheck(posInMain);
+
+        ++countMain[3];
+        return wingMan(posInWingMan).compareTo(elementData(posInMain));
+    }
+
+    /**
      * 调用已经实现的接口比较辅助数组中位于位置i与j的元素(若i, j均合法)
      * @param i 第一个元素
      * @param j 第二个元素
@@ -248,11 +280,27 @@ public class MyData<N extends Number & Comparable<N>> {
     }
 
     /**
+     * 检查主数组内容是否与给定数组的内容相等
+     * @param sortedArray 给定的数组, 一般是已经排好序的
+     * @return 比较结果
+     */
+    public boolean check(N @NotNull [] sortedArray) {
+        if (sortedArray.length != size)
+            throw new InvalidParameterException();
+
+        for (int i = 0; i < size; ++i) {
+            if (!sortedArray[i].equals(elementData(i)))
+                return false;
+        }
+        return true;
+    }
+
+    /**
      * 获取指定数组类型的计数数组
      * @param arrayType 数组类型
      * @return 返回计数数组的一个拷贝
      */
-    public int[] getCount(int arrayType) {
+    public long[] getCount(int arrayType) {
         if (arrayType > 1)
             throw new IndexOutOfBoundsException();
 

@@ -2,10 +2,13 @@ package Experiment.Exp4;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * 结果类, 便于输出结果
+ */
 class Result {
-    private final int[] countMain;
+    private final long[] countMain;
 
-    private final int[] countWingMan;
+    private final long[] countWingMan;
 
     private final long timeCostMillis;
 
@@ -13,6 +16,12 @@ class Result {
 
     public static final int GET = 0, SET = 1, SWAP = 2, COMPARE = 3;
 
+    /**
+     * 构造函数, 在MySort中使用
+     * @param array 被排序的数组
+     * @param startTimeMillis 排序操作的最开始的时间
+     * @param <T> MyData类或其派生类
+     */
     <T extends MyData<?>> Result(@NotNull T array, long startTimeMillis) {
         countMain = array.getCount(MAIN);
         countWingMan = array.getCount(WINGMAN);
@@ -25,7 +34,7 @@ class Result {
      * @param operationType 操作类型
      * @return 返回计数
      */
-    public int getCount(int arrayType, int operationType) {
+    public long getCount(int arrayType, int operationType) {
         if (arrayType > 1 || operationType > 3)
             throw new IndexOutOfBoundsException();
 
@@ -40,7 +49,7 @@ class Result {
      * @param operationType 操作类型
      * @return 总数
      */
-    public int getCount(int operationType) {
+    public long getCount(int operationType) {
         if (operationType > 3)
             throw new IndexOutOfBoundsException();
 
