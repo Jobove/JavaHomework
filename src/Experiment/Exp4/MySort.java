@@ -18,7 +18,7 @@ public class MySort {
      * @return 一个Result类的实例, 记录了结果
      */
     @Contract("_ -> new")
-    public static <T extends MyData<?>> @NotNull Result BubbleSort(@NotNull T array) {
+    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result BubbleSort(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         int size = array.getSize();
         for (int i = 0; i < size; ++i) {
@@ -40,7 +40,7 @@ public class MySort {
      * @return 一个Result类的实例, 记录了结果
      */
     @Contract("_ -> new")
-    public static <T extends MyData<?>> @NotNull Result SelectionSort(@NotNull T array) {
+    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result SelectionSort(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         int size = array.getSize();
 
@@ -65,7 +65,7 @@ public class MySort {
      * @return 一个Result类的实例, 记录了结果
      */
     @Contract("_ -> new")
-    public static <T extends MyData<?>> @NotNull Result InsertionSort(@NotNull T array) {
+    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result InsertionSort(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         int size = array.getSize();
 
@@ -112,7 +112,7 @@ public class MySort {
      * @param <T> MyData或其派生类
      * @return 一个Result类的实例, 记录了结果
      */
-    public static <T extends MyData<?>> @NotNull Result MergeSortRecursive(@NotNull T array) {
+    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result MergeSortRecursive(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         MergeSortWorker(array, 0, array.getSize() - 1);
         return new Result(array, startTime);
@@ -125,7 +125,7 @@ public class MySort {
      * @param end 需要排序的区间末尾位置
      * @param <T> MyData或其派生类
      */
-    private static <T extends MyData<?>> void MergeSortWorker(T array, int start, int end) {
+    private static <N extends Number & Comparable<N>, T extends MyData<N>> void MergeSortWorker(T array, int start, int end) {
         //递归边界条件, 如果数组长度为1则无需排序
         if (start == end)
             return;
@@ -171,7 +171,7 @@ public class MySort {
      * @return 一个Result类的实例, 记录了结果
      */
     @Contract("_ -> new")
-    public static <T extends MyData<?>> @NotNull Result MergeSortNonRecursive(@NotNull T array) {
+    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result MergeSortNonRecursive(@NotNull T array) {
         final long startTime = System.currentTimeMillis();
         int len = 2, size = array.getSize();
         //从大小为2的区间开始排序, 直到排序的区间的大小与数组大小相等或更大时进行最后一次排序, 而后终止循环
@@ -231,7 +231,7 @@ public class MySort {
      * @param <T> MyData或其派生类
      * @return 一个Result类的实例, 记录了结果
      */
-    public static <T extends MyData<?>> @NotNull Result sort(@NotNull T array, int operationType) {
+    public static <N extends Number & Comparable<N>, T extends MyData<N>> @NotNull Result sort(@NotNull T array, int operationType) {
         switch (operationType) {
             case BUBBLE:
                 return BubbleSort(array);
