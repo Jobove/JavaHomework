@@ -4,8 +4,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.stream.IntStream;
 
+/**
+ * 测试类
+ */
 public class MyTest {
     static Scanner scanner = new Scanner(System.in);
     static final String[] strings =

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"MyData","h":"","u":""},{"l":"MySort","h":"","u":""},{"l":"MyTest","h":"","u":""},{"l":"Result","h":"","u":""},{"l":"所有类","h":"","u":"allclasses-index.html"}]

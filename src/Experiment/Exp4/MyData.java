@@ -51,13 +51,12 @@ public class MyData<N extends Number & Comparable<N>> {
 
     /**
      * 随机填充数组, 不指定范围
+     * @return 随机生成器所使用的种子
      */
     public long fill() {
         long seed = System.currentTimeMillis();
         Random random = new Random(seed);
-        for (int i = 0; i < size; ++i) {
-            elementData[i] = random.nextInt();
-        }
+        elementData = random.ints(size).boxed().toArray(Integer[]::new);
         return seed;
     }
 

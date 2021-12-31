@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 工具类, 不具有任何数据成员, 只作为排序方法的包装, 无需实例化
+ * 工具类, 不具有任何非静态数据成员, 只作为排序方法的包装, 无需实例化
  */
 public class MySort {
     public static final int BUBBLE = 0, SELECTION = 1, INSERTION = 2, MERGE = 3, MERGE_RECURSIVE = 4;
@@ -248,4 +248,3 @@ public class MySort {
         }
     }
 }
-
